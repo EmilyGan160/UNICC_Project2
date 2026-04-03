@@ -7,6 +7,10 @@ from critique import run_critique_llm
 from synthesis import run_synthesis_llm
 from report import render_llm_report
 
+
+DEFAULT_TEST_REPO = "https://github.com/FlashCarrot/VeriMedia"
+
+
 def evaluate_agent_llm(user_input: str):
     accepted = accept_input(user_input)
 
@@ -46,6 +50,7 @@ def evaluate_agent_llm(user_input: str):
         "synthesis_text": synthesis_text,
     }
 
+
 def save_outputs(result: dict, out_dir: str = "examples"):
     out_path = Path(out_dir)
     out_path.mkdir(parents=True, exist_ok=True)
@@ -58,8 +63,16 @@ def save_outputs(result: dict, out_dir: str = "examples"):
     json_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     return report_path, json_path
 
+
 if __name__ == "__main__":
-    user_input = input("Enter GitHub repository URL or structured agent description: ").strip()
+    user_input = input(
+        f"Enter GitHub repository URL or structured agent description "
+        f"(press Enter for default: {DEFAULT_TEST_REPO}): "
+    ).strip()
+
+    if not user_input:
+        user_input = DEFAULT_TEST_REPO
+
     result = evaluate_agent_llm(user_input)
     report = render_llm_report(result)
     report_path, json_path = save_outputs(result)
