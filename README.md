@@ -1,8 +1,12 @@
-# UNICC AI Safety Lab — Project 2 Council Prototype
+# UNICC AI Safety Lab — Project 2 Council System
 
-This repository contains our Project 2 submission for the UNICC AI Safety Lab capstone.
+This repository implements a **Council-of-Experts AI safety evaluation system**.
 
-The system evaluates an AI repository or structured AI-agent description using a **Council of Experts** architecture.
+The system evaluates AI repositories or descriptions and produces:
+
+- Three independent expert assessments  
+- A cross-expert critique round  
+- A final arbitration decision (APPROVE / REVIEW / REJECT)  
 
 ---
 
@@ -14,7 +18,7 @@ cd UNICC_Project2
 pip install -r requirements.txt
 ```
 
-Run (no API key needed):
+Run (no API key required):
 
 ```bash
 export LLM_PROVIDER=mock
@@ -30,16 +34,35 @@ https://github.com/FlashCarrot/VeriMedia
 
 ---
 
-## What It Does
+## What This System Does
 
-- 3 expert evaluations (Safety / Governance / Security)
-- Critique round
-- Final verdict (APPROVE / REVIEW / REJECT)
-- Markdown + JSON output
+The evaluation pipeline:
+
+1. Input parsing  
+2. Feature extraction  
+3. Expert A — Safety  
+4. Expert B — Governance  
+5. Expert C — Security  
+6. Critique round  
+7. Final synthesis (council decision)  
+8. Report generation  
 
 ---
 
-## With OpenAI
+## Expert Roles
+
+### Expert A — Safety
+Focus on harm, unsafe outputs, and misuse.
+
+### Expert B — Governance
+Focus on auditability, compliance, and deployment risk.
+
+### Expert C — Security
+Focus on vulnerabilities and attack surface.
+
+---
+
+## Run with OpenAI
 
 ```bash
 export LLM_PROVIDER=openai
@@ -53,8 +76,6 @@ python main.py
 
 ## Output
 
-Saved to:
-
 ```
 examples/latest_report.md
 examples/latest_result.json
@@ -62,11 +83,19 @@ examples/latest_result.json
 
 ---
 
+## API Key Policy
+
+- No keys are hardcoded  
+- Uses environment variables  
+- Works fully in mock mode  
+
+---
+
 ## Notes
 
-- No API keys are hardcoded
-- Works with or without API key
-- Mock mode ensures full pipeline execution
+- System produces repository-specific analysis  
+- Designed for evaluation environments  
+- Fully executable via README instructions  
 
 ---
 
