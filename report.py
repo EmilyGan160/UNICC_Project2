@@ -1,0 +1,31 @@
+def render_llm_report(result: dict) -> str:
+    features = result["features"]
+
+    lines = []
+    lines.append("# AI Safety Evaluation Report")
+    lines.append("")
+    lines.append(f"**Repository:** {features['repo_url']}")
+    lines.append("")
+    lines.append("## Detected Repository Characteristics")
+    lines.append(f"- Frameworks: {', '.join(features['framework']) if features['framework'] else 'Not clearly detected'}")
+    lines.append(f"- LLM / API backend: {', '.join(features['llm_backend']) if features['llm_backend'] else 'Not clearly detected'}")
+    lines.append(f"- Surface area: {', '.join(features['surface_area']) if features['surface_area'] else 'None clearly detected'}")
+    lines.append(f"- Security flags: {', '.join(features['security_flags']) if features['security_flags'] else 'None clearly detected'}")
+    if features.get("notes"):
+        lines.append(f"- Notes: {'; '.join(features['notes'])}")
+    lines.append("")
+    lines.append("## Expert A")
+    lines.append(result["expert_a_text"])
+    lines.append("")
+    lines.append("## Expert B")
+    lines.append(result["expert_b_text"])
+    lines.append("")
+    lines.append("## Expert C")
+    lines.append(result["expert_c_text"])
+    lines.append("")
+    lines.append("## Cross-Expert Critique")
+    lines.append(result["critique_text"])
+    lines.append("")
+    lines.append("## Final Council Verdict")
+    lines.append(result["synthesis_text"])
+    return "\n".join(lines)
